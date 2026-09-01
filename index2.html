@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qspiran Technologies — Portfolio</title>
+<link rel="icon" href="https://www.qspiran.com/uploads/media/logo-finalpng-1788264361-6a96bfa94d1d7.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0a0d24;
+    --ink-soft:#141a45;
+    --ink-softer:#1c2358;
+    --paper:#f5f6fb;
+    --paper-deep:#e8eaf9;
+    --text:#12142c;
+    --text-soft:#4b4f70;
+    --gold:#f2b431;
+    --gold-soft:#ffe3a1;
+    --blue:#6f93ff;
+    --blue-soft:#c7d5ff;
+    --coral:#ff4d6d;
+    --coral-soft:#ffd0da;
+    --violet:#8b5cf6;
+    --violet-soft:#ded1ff;
+    --green:#38d97a;
+    --line:rgba(10,13,36,0.12);
+    --line-dark:rgba(255,255,255,0.16);
+    --r-s:12px;
+    --r-m:20px;
+    --r-l:32px;
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+  h1,h2,h3,h4{
+    font-family:'Bricolage Grotesque',sans-serif;
+    margin:0;
+    font-weight:700;
+    letter-spacing:-0.015em;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;letter-spacing:0.02em;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  video{max-width:100%;display:block;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px;}
+  section{position:relative;}
+  ::selection{background:var(--coral);color:#fff;}
+  :focus-visible{outline:2px solid var(--coral);outline-offset:3px;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important;}
+  }
+
+  /* ---------- SCROLL PROGRESS ---------- */
+  .scroll-progress{
+    position:fixed;top:0;left:0;height:3px;width:0%;
+    background:linear-gradient(90deg,var(--coral),var(--gold),var(--violet));
+    z-index:200;transition:width .08s linear;
+  }
+
+  /* ---------- TAG CHIPS (replace numbered eyebrows) ---------- */
+  .tag-chip{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:13px;font-weight:600;
+    padding:7px 14px;border-radius:999px;
+    margin-bottom:16px;
+  }
+  .tag-chip.on-dark{background:rgba(255,255,255,0.08);border:1px solid var(--line-dark);}
+  .tag-chip .dot{width:6px;height:6px;border-radius:50%;}
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(10,13,36,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line-dark);
+  }
+  .nav-inner{
+    max-width:var(--maxw);margin:0 auto;padding:0 32px;
+    display:flex;align-items:center;justify-content:space-between;
+    height:64px;
+  }
+  .nav-brand{display:flex;align-items:center;gap:10px;}
+  .nav-brand img{height:26px;width:auto;filter:brightness(0) invert(1);}
+  .nav-links{display:flex;gap:28px;}
+  .nav-links a{
+    color:var(--blue-soft);font-size:14.5px;font-weight:500;
+    padding:6px 0;border-bottom:1px solid transparent;
+    transition:border-color .2s ease, color .2s ease;
+  }
+  .nav-links a:hover{border-color:var(--coral);color:#fff;}
+  .nav-cta{
+    font-size:13px;font-weight:600;color:var(--ink);background:var(--gold);
+    padding:9px 18px;border-radius:999px;
+  }
+  .nav-toggle{
+    display:none;flex-direction:column;gap:5px;
+    background:none;border:none;cursor:pointer;padding:8px;
+  }
+  .nav-toggle span{width:22px;height:2px;background:#fff;border-radius:2px;transition:transform .2s ease, opacity .2s ease;}
+  .nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .nav-toggle.open span:nth-child(2){opacity:0;}
+  .nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+  .nav-mobile-panel{
+    display:none;position:fixed;top:64px;left:0;right:0;z-index:99;
+    background:var(--ink);border-bottom:1px solid var(--line-dark);
+    padding:8px 32px 20px;flex-direction:column;
+  }
+  .nav-mobile-panel.open{display:flex;}
+  .nav-mobile-panel a{color:var(--blue-soft);font-size:15px;padding:12px 0;border-bottom:1px solid var(--line-dark);}
+  .nav-mobile-panel a:last-child{border-bottom:none;}
+  @media (max-width:820px){
+    .nav-links{display:none;}
+    .nav-toggle{display:flex;}
+  }
+  @media (min-width:821px){ .nav-mobile-panel{display:none !important;} }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    color:#fff;
+    padding:150px 0 70px;
+    overflow:hidden;
+    position:relative;
+    min-height:94vh;
+    display:flex;
+    align-items:center;
+  }
+  .hero-video-layer{position:absolute;inset:0;z-index:0;overflow:hidden;background:var(--ink);}
+  .hero-video-layer video{
+    position:absolute;top:50%;left:50%;
+    min-width:100%;min-height:100%;width:auto;height:auto;
+    transform:translate(-50%,-50%);
+    object-fit:cover;opacity:0;transition:opacity 1.4s ease;
+  }
+  .hero-video-layer video.ready{opacity:1;}
+  .hero-video-layer:after{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(ellipse 900px 500px at 12% -8%, rgba(255,77,109,0.22), transparent 60%),
+      radial-gradient(ellipse 800px 500px at 100% 10%, rgba(139,92,246,0.22), transparent 55%),
+      linear-gradient(180deg, rgba(10,13,36,0.93), rgba(13,17,48,0.88) 55%, var(--ink-softer) 100%);
+  }
+  .hero-glow{
+    position:absolute;z-index:1;width:520px;height:520px;border-radius:50%;
+    pointer-events:none;filter:blur(30px);
+    background:radial-gradient(circle, rgba(255,77,109,.35), rgba(139,92,246,.2) 45%, transparent 72%);
+    transform:translate(var(--gx,60%),var(--gy,10%)) translate(-50%,-50%);
+    transition:transform .3s ease-out;
+  }
+  .hero-inner{position:relative;z-index:2;width:100%;}
+  .hero-kicker{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;color:var(--gold-soft);
+    display:flex;align-items:center;gap:10px;margin-bottom:26px;
+  }
+  .hero-kicker .dot{
+    width:7px;height:7px;border-radius:50%;background:var(--green);
+    box-shadow:0 0 0 0 rgba(56,217,122,.6);animation:pulse 2s infinite;
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(56,217,122,.55);}
+    70%{box-shadow:0 0 0 8px rgba(56,217,122,0);}
+    100%{box-shadow:0 0 0 0 rgba(56,217,122,0);}
+  }
+  .hero h1{
+    font-size:clamp(36px, 6vw, 68px);
+    line-height:1.03;
+    max-width:960px;
+    font-weight:800;
+  }
+  .flap-word{display:inline-block;white-space:pre;}
+  .flap-char{display:inline-block;min-width:0.14em;}
+  .hero p.lede{
+    margin-top:26px;max-width:580px;
+    font-size:18px;color:var(--blue-soft);
+    line-height:1.6;
+    opacity:0;transform:translateY(10px);
+    animation:fadeUp .8s ease 1.7s forwards;
+  }
+  @keyframes fadeUp{ to{ opacity:1; transform:translateY(0); } }
+
+  .board{
+    margin-top:48px;
+    border:1px solid var(--line-dark);
+    border-radius:var(--r-m);
+    background:rgba(10,13,36,0.55);
+    backdrop-filter:blur(6px);
+    overflow:hidden;
+    opacity:0;transform:translateY(10px);
+    animation:fadeUp .8s ease 2s forwards;
+  }
+  .board-row{
+    display:grid;grid-template-columns:1.4fr 1fr 1fr;
+    padding:14px 20px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;
+    border-top:1px solid var(--line-dark);align-items:center;
+  }
+  .board-row:first-child{border-top:none;background:rgba(255,255,255,0.05);color:var(--blue-soft);font-size:10.5px;}
+  .board-row .status-live{color:var(--green);}
+  .board-row .status-hq{color:var(--gold-soft);}
+  .board-row .status-done{color:var(--blue-soft);}
+  @media (max-width:600px){
+    .board-row{grid-template-columns:1.3fr 1fr;font-size:11.5px;}
+    .board-row span:nth-child(3){display:none;}
+  }
+
+  .ticker{
+    margin-top:16px;overflow:hidden;white-space:nowrap;
+    border-top:1px solid var(--line-dark);border-bottom:1px solid var(--line-dark);
+    opacity:0;animation:fadeUp .8s ease 2.2s forwards;
+  }
+  .ticker-track{display:inline-flex;gap:36px;padding:12px 0;animation:tickerScroll 26s linear infinite;}
+  .ticker-track span{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--gold-soft);letter-spacing:0.03em;}
+  .ticker-track span.sep{color:var(--coral);}
+  @keyframes tickerScroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+
+  /* ---------- SECTION HEADERS ---------- */
+  .sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:40px;flex-wrap:wrap;}
+  .sec-head h2{font-size:clamp(28px,3.6vw,40px);max-width:600px;}
+  .sec-head .sec-note{font-size:15px;color:var(--text-soft);max-width:320px;}
+
+  /* ---------- ABOUT ---------- */
+  .about{padding:100px 0;background:var(--paper);}
+  .about-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:60px;}
+  .about-grid p{font-size:17px;color:var(--text-soft);margin:0 0 16px;max-width:480px;}
+  .about-grid h2{font-size:clamp(26px,3.2vw,34px);margin-bottom:22px;max-width:460px;}
+  .tag-chip.chip-gold{background:var(--gold-soft);color:#7a4d00;}
+
+  .bento{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;gap:14px;}
+  .bento-cell{border-radius:var(--r-m);padding:24px;}
+  .bento-cell.big{
+    grid-column:1 / 2;grid-row:1 / 3;
+    background:linear-gradient(155deg,var(--coral),var(--violet));
+    color:#fff;display:flex;flex-direction:column;justify-content:flex-end;min-height:260px;
+  }
+  .bento-cell.plain{background:#fff;border:1px solid var(--line);}
+  .bento-num{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:38px;font-variant-numeric:tabular-nums;}
+  .bento-cell.big .bento-num{font-size:52px;}
+  .bento-label{font-size:13.5px;color:var(--text-soft);margin-top:6px;max-width:220px;}
+  .bento-cell.big .bento-label{color:rgba(255,255,255,0.88);}
+  @media (max-width:860px){ .about-grid{grid-template-columns:1fr;} }
+  @media (max-width:520px){ .bento{grid-template-columns:1fr;} .bento-cell.big{grid-column:1;grid-row:auto;min-height:180px;} }
+
+  /* ---------- SERVICES ---------- */
+  .services{padding:100px 0;background:var(--ink);color:#fff;}
+  .services .sec-head h2{color:#fff;}
+  .services .sec-head .sec-note{color:var(--blue-soft);}
+  .tag-chip.chip-blue{background:rgba(111,147,255,0.16);color:var(--blue-soft);border:1px solid rgba(111,147,255,0.3);}
+
+  .stub-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .stub{
+    background:var(--ink-soft);padding:28px 24px;border-radius:var(--r-m);
+    border-top:3px solid var(--stub-accent, var(--gold));
+    transition:transform .2s ease, background .2s ease;
+  }
+  .stub:hover{transform:translateY(-4px);background:var(--ink-softer);}
+  .stub h3{font-size:18.5px;font-weight:700;margin-bottom:10px;}
+  .stub p{font-size:13.8px;color:var(--blue-soft);margin:0;line-height:1.55;}
+  @media (max-width:820px){ .stub-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:560px){ .stub-grid{grid-template-columns:1fr;} }
+
+  .specialization{margin-top:14px;display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  .spec-card{
+    border-radius:var(--r-m);padding:28px;
+    background:linear-gradient(155deg, var(--coral) 0%, var(--violet) 100%);
+  }
+  .spec-card.alt{background:linear-gradient(155deg, var(--gold) 0%, var(--coral) 100%);}
+  .spec-card .tag-pill{
+    display:inline-block;font-size:11px;font-weight:700;
+    color:#fff;background:rgba(255,255,255,0.22);padding:4px 11px;border-radius:20px;
+    margin-bottom:14px;
+  }
+  .spec-card h4{font-size:17px;margin-bottom:6px;color:#fff;}
+  .spec-card p{font-size:13.5px;color:rgba(255,255,255,0.88);margin:0;}
+  @media (max-width:560px){ .specialization{grid-template-columns:1fr;} }
+
+  /* ---------- CASE STUDY ---------- */
+  .case{padding:100px 0;background:var(--paper-deep);}
+  .case:nth-of-type(even){background:var(--paper);}
+  .case-grid{display:grid;grid-template-columns:0.92fr 1.08fr;gap:56px;align-items:center;}
+  .case-grid.reverse{grid-template-columns:1.08fr 0.92fr;}
+  .case-grid.reverse .case-shot{order:2;}
+  .case-grid.reverse .case-copy{order:1;}
+  .case-shot{
+    position:relative;border-radius:var(--r-l);overflow:hidden;
+    border:1px solid var(--line);
+    box-shadow:0 28px 60px -22px rgba(10,13,36,0.4);
+    background:var(--ink);aspect-ratio:4/3;
+  }
+  .case-shot video{width:100%;height:100%;object-fit:cover;display:block;}
+  .case-shot .case-caption{
+    position:absolute;left:0;right:0;bottom:0;padding:14px 16px;
+    display:flex;align-items:center;justify-content:space-between;
+    background:linear-gradient(0deg, rgba(10,13,36,0.9), transparent);
+    color:#fff;font-family:'IBM Plex Mono',monospace;font-size:11px;
+  }
+  .case-shot .case-caption .rec{display:flex;align-items:center;gap:6px;color:var(--gold-soft);}
+  .case-shot .case-caption .rec span{width:6px;height:6px;border-radius:50%;background:var(--coral);animation:pulse 1.6s infinite;}
+  .case-shot .mute-btn{
+    border:1px solid rgba(255,255,255,0.5);background:rgba(10,13,36,0.5);
+    color:#fff;border-radius:20px;padding:4px 10px;cursor:pointer;
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;
+  }
+  .case-copy h2{font-size:clamp(26px,3.2vw,34px);margin-bottom:18px;max-width:460px;}
+  .case-copy p{font-size:16.5px;color:var(--text-soft);max-width:460px;margin:0 0 24px;}
+  .route{border-radius:var(--r-m);background:#fff;border:1px solid var(--line);padding:6px;display:flex;flex-wrap:wrap;gap:6px;}
+  .stamp{flex:1;min-width:140px;border:1px dashed var(--line);border-radius:var(--r-s);padding:14px 16px;}
+  .stamp .city{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;}
+  .stamp .status{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green);margin-top:4px;display:block;}
+  .stamp.hq .status{color:#b8860b;}
+  .stamp.done .status{color:var(--blue);}
+  @media (max-width:860px){
+    .case-grid{grid-template-columns:1fr;}
+    .case-grid.reverse .case-shot{order:1;}
+    .case-grid.reverse .case-copy{order:2;}
+  }
+
+  /* ---------- PORTFOLIO ---------- */
+  .portfolio{padding:100px 0;background:var(--paper);}
+  .tag-chip.chip-violet{background:var(--violet-soft);color:#4b25a8;}
+  .p-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:auto;gap:16px;}
+  .p-card{
+    background:#fff;border:1px solid var(--line);border-radius:var(--r-m);
+    overflow:hidden;transition:transform .2s ease;
+  }
+  .p-card:hover{transform:translateY(-3px);}
+  .p-card.featured{grid-column:span 2;grid-row:span 2;position:relative;border:2px solid transparent;background:linear-gradient(#fff,#fff) padding-box, linear-gradient(120deg,var(--coral),var(--gold),var(--violet)) border-box;}
+  .p-thumb{aspect-ratio:4/3;overflow:hidden;background:var(--paper-deep);border-bottom:1px solid var(--line);}
+  .p-card.featured .p-thumb{aspect-ratio:16/10;}
+  .p-thumb img{width:100%;height:100%;object-fit:cover;}
+  .p-body{padding:16px 18px 20px;}
+  .p-body .p-tag{display:inline-block;font-size:11px;font-weight:700;color:var(--coral);background:var(--coral-soft);padding:3px 10px;border-radius:20px;margin-bottom:10px;}
+  .p-body h4{font-size:15px;margin-bottom:6px;line-height:1.3;}
+  .p-card.featured .p-body h4{font-size:19px;}
+  .p-body p{font-size:12.8px;color:var(--text-soft);margin:0;line-height:1.5;}
+  @media (max-width:960px){ .p-grid{grid-template-columns:repeat(2,1fr);} .p-card.featured{grid-column:span 2;grid-row:span 1;} }
+  @media (max-width:520px){ .p-grid{grid-template-columns:1fr;} .p-card.featured{grid-column:span 1;} }
+
+  /* ---------- INDUSTRIES ---------- */
+  .industries{padding:84px 0;background:var(--ink);color:#fff;}
+  .ind-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  .ind-item{background:var(--ink-soft);border-radius:var(--r-m);padding:24px;border-top:3px solid var(--ind-accent,var(--blue));}
+  .ind-item h4{color:#fff;font-size:15.5px;margin-bottom:6px;}
+  .ind-item p{color:var(--blue-soft);font-size:12.8px;margin:0;}
+  .industries .foot-note{margin-top:18px;font-size:12.5px;color:rgba(255,255,255,0.4);}
+  @media (max-width:760px){ .ind-row{grid-template-columns:1fr 1fr;} }
+  @media (max-width:480px){ .ind-row{grid-template-columns:1fr;} }
+
+  /* ---------- TEAM ---------- */
+  .team{padding:100px 0;background:var(--paper);}
+  .team-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;}
+  .badge{background:#fff;border:1px solid var(--line);border-radius:var(--r-m);overflow:hidden;}
+  .badge-photo{aspect-ratio:1/1;background:var(--ink);overflow:hidden;}
+  .badge-photo img{width:100%;height:100%;object-fit:cover;object-position:top center;}
+  .badge-info{padding:12px 12px 14px;border-top:3px solid var(--badge-accent,var(--gold));}
+  .badge-info .b-name{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:13.5px;}
+  .badge-info .b-role{font-family:'IBM Plex Mono',monospace;font-size:10.2px;color:var(--text-soft);margin-top:3px;}
+  @media (max-width:920px){ .team-grid{grid-template-columns:repeat(3,1fr);} }
+  @media (max-width:520px){ .team-grid{grid-template-columns:repeat(2,1fr);} }
+
+  /* ---------- CONTACT / FOOTER ---------- */
+  .contact{background:var(--ink);color:#fff;padding:96px 0 0;position:relative;overflow:hidden;}
+  .contact:before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(ellipse 700px 400px at 90% 0%, rgba(255,77,109,0.18), transparent 60%),
+                radial-gradient(ellipse 700px 400px at 0% 100%, rgba(139,92,246,0.18), transparent 60%);
+    pointer-events:none;
+  }
+  .contact-grid{position:relative;display:grid;grid-template-columns:1.2fr 1fr;gap:48px;padding-bottom:70px;border-bottom:1px solid var(--line-dark);}
+  .contact h2{
+    font-size:clamp(30px,4vw,44px);max-width:520px;
+    background:linear-gradient(120deg,#fff,var(--gold-soft) 60%,var(--coral-soft));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .contact-fields{display:grid;gap:0;}
+  .c-field{padding:18px 0;border-top:1px solid var(--line-dark);}
+  .c-field:first-child{border-top:none;}
+  .c-field .c-label{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--blue-soft);letter-spacing:0.06em;margin-bottom:6px;}
+  .c-field .c-value{font-size:15.5px;}
+  .c-field a:hover{color:var(--coral);}
+  .foot-bottom{position:relative;max-width:var(--maxw);margin:0 auto;padding:26px 32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+  .foot-bottom img{height:20px;filter:brightness(0) invert(1);opacity:0.85;}
+  .foot-bottom .fine{font-size:12px;color:rgba(255,255,255,0.4);}
+  @media (max-width:820px){ .contact-grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <img src="https://www.qspiran.com/uploads/media/logo-finalpng-1788264361-6a96bfa94d1d7.png" alt="Qspiran Technologies">
+    </div>
+    <nav class="nav-links">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#case-study">Boardroom</a>
+      <a href="#case-meta">Meta Activation</a>
+      <a href="#case-hologram">Holograms</a>
+      <a href="#portfolio">Products</a>
+      <a href="#team">Team</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:14px;">
+      <a class="nav-cta" href="#contact">crm@qspiran.com</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="nav-mobile-panel" id="navMobilePanel">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#case-study">Boardroom</a>
+    <a href="#case-meta">Meta Activation</a>
+    <a href="#case-hologram">Holograms</a>
+    <a href="#portfolio">Products</a>
+    <a href="#team">Team</a>
+    <a href="#contact">Contact</a>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="heroSection">
+  <div class="hero-video-layer">
+    <video id="heroVideo" autoplay muted loop playsinline preload="auto">
+      <source src="https://www.qspiran.com/uploads/media/e4fb772e-b66c-4b4c-9ecf-5fbd76ebd235mp4-1788264418-6a96bfe28c154.MP4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero-glow" id="heroGlow"></div>
+  <div class="wrap hero-inner">
+    <div class="hero-kicker">
+      <span class="dot"></span>
+      <span id="clock-line">QSPIRAN TECHNOLOGIES — NOIDA, INDIA</span>
+    </div>
+    <h1 id="hero-headline"></h1>
+    <p class="lede">We build the screens, kiosks and holograms people actually stop for — designed in Noida, running everywhere from event floors to boardrooms in Singapore and Germany.</p>
+
+    <div class="board">
+      <div class="board-row">
+        <span>Deployment</span><span>Status</span><span>Notes</span>
+      </div>
+      <div class="board-row">
+        <span>Noida, India — HQ</span><span class="status-hq">BUILDING</span><span>Product &amp; engineering base</span>
+      </div>
+      <div class="board-row">
+        <span>Singapore</span><span class="status-done">COMPLETED</span><span>Boardroom booking system</span>
+      </div>
+      <div class="board-row">
+        <span>Germany</span><span class="status-live">LIVE</span><span>Boardroom booking system</span>
+      </div>
+    </div>
+
+    <div class="ticker">
+      <div class="ticker-track">
+        <span>KIOSKS</span><span class="sep">•</span>
+        <span>DIGITAL SIGNAGE</span><span class="sep">•</span>
+        <span>3D HOLOGRAM AVATARS</span><span class="sep">•</span>
+        <span>EVENT TECH</span><span class="sep">•</span>
+        <span>MOBILE APPS</span><span class="sep">•</span>
+        <span>CLOUD &amp; SAAS</span><span class="sep">•</span>
+        <span>KIOSKS</span><span class="sep">•</span>
+        <span>DIGITAL SIGNAGE</span><span class="sep">•</span>
+        <span>3D HOLOGRAM AVATARS</span><span class="sep">•</span>
+        <span>EVENT TECH</span><span class="sep">•</span>
+        <span>MOBILE APPS</span><span class="sep">•</span>
+        <span>CLOUD &amp; SAAS</span><span class="sep">•</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section class="about" id="about">
+  <div class="wrap about-grid">
+    <div>
+      <span class="tag-chip chip-gold">About Qspiran</span>
+      <h2>A software house that works where a screen meets a real room.</h2>
+      <p>Qspiran Technologies builds the tech behind the moments people actually walk up to — a boardroom door, a hotel lobby, an exhibition booth, a restaurant counter. The team designs kiosks, digital signage, mobile apps and the enterprise systems that keep them all synced.</p>
+      <p>Every product is planned, designed, tested and supported end to end — from the first requirement conversation to the screen going live on-site.</p>
+    </div>
+    <div class="bento">
+      <div class="bento-cell big">
+        <span class="bento-num" data-count="12" data-suffix="+">0</span>
+        <span class="bento-label">products shipped, from digital signage to event tech</span>
+      </div>
+      <div class="bento-cell plain">
+        <span class="bento-num" data-count="3">0</span>
+        <span class="bento-label">countries running live Qspiran deployments</span>
+      </div>
+      <div class="bento-cell plain">
+        <span class="bento-num" data-count="6">0</span>
+        <span class="bento-label">services spanning software, mobile, cloud and SaaS</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SERVICES ================= -->
+<section class="services" id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="tag-chip chip-blue on-dark">What we build</span>
+        <h2>Six ways in, one team behind all of them.</h2>
+      </div>
+      <p class="sec-note">From a single custom build to a full enterprise rollout — planning, design, development and support stay under one roof.</p>
+    </div>
+
+    <div class="stub-grid">
+      <div class="stub" style="--stub-accent:var(--gold)"><h3>Custom Software Development</h3><p>Tailor-made systems built around how your business already works, not the other way round.</p></div>
+      <div class="stub" style="--stub-accent:var(--coral)"><h3>Web Application Development</h3><p>Secure, high-performance web apps that scale with the business behind them.</p></div>
+      <div class="stub" style="--stub-accent:var(--blue)"><h3>Mobile App Development</h3><p>Native-feeling Android and iOS apps that keep customers connected on the move.</p></div>
+      <div class="stub" style="--stub-accent:var(--violet)"><h3>Cloud Solutions &amp; Integration</h3><p>Cloud infrastructure that stores, connects and secures every system you run.</p></div>
+      <div class="stub" style="--stub-accent:var(--gold)"><h3>Enterprise Software Solutions</h3><p>Robust systems for managing resources and running complex workflows at scale.</p></div>
+      <div class="stub" style="--stub-accent:var(--coral)"><h3>SaaS Product Development</h3><p>An idea turned into a subscription-ready platform, architecture included.</p></div>
+    </div>
+    <div class="specialization">
+      <div class="spec-card">
+        <span class="tag-pill">SPECIALIZATION</span>
+        <h4>Event Technology Solutions</h4>
+        <p>Self-ordering kiosks, badge printing, ticketing and registration systems built for live events and conferences.</p>
+      </div>
+      <div class="spec-card alt">
+        <span class="tag-pill">SPECIALIZATION</span>
+        <h4>Digital Signage</h4>
+        <p>Screens that manage and update themselves — from boardroom schedules to multi-screen video walls.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CASE STUDY: BOARDROOM ================= -->
+<section class="case" id="case-study">
+  <div class="wrap case-grid">
+    <div class="case-shot">
+      <video id="caseVideo" muted loop playsinline preload="auto">
+        <source src="https://www.qspiran.com/uploads/media/48fc355b-0915-4c7c-ab03-534129cb88e9mp4-1788264418-6a96bfe28cf73.MP4" type="video/mp4">
+      </video>
+      <div class="case-caption">
+        <span class="rec"><span></span>LIVE FOOTAGE</span>
+        <button class="mute-btn" data-mute-target="caseVideo" type="button" aria-label="Unmute video">SOUND OFF</button>
+      </div>
+    </div>
+    <div class="case-copy">
+      <span class="tag-chip chip-blue">Case study — Boardroom system</span>
+      <h2>The boardroom booking system, live outside the door.</h2>
+      <p>Every meeting room gets a screen that shows what's happening now and what's booked next — synced in real time, no app required for anyone walking past. It's the kind of quiet, always-on system that only gets noticed when it's missing, which is exactly the point.</p>
+      <p>Qspiran designed, built and deployed the system end to end.</p>
+      <div class="route">
+        <div class="stamp hq"><span class="city">Noida, India</span><span class="status">DESIGNED &amp; BUILT</span></div>
+        <div class="stamp done"><span class="city">Singapore</span><span class="status">DEPLOYED · COMPLETED</span></div>
+        <div class="stamp"><span class="city">Germany</span><span class="status">DEPLOYED · LIVE</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CASE STUDY: META EVENT SOLUTION ================= -->
+<section class="case" id="case-meta">
+  <div class="wrap case-grid reverse">
+    <div class="case-shot">
+      <video id="caseVideoMeta" muted loop playsinline preload="auto">
+        <source src="https://www.qspiran.com/uploads/media/e4fb772e-b66c-4b4c-9ecf-5fbd76ebd235mp4-1788264418-6a96bfe28c154.MP4" type="video/mp4">
+      </video>
+      <div class="case-caption">
+        <span class="rec"><span></span>LIVE FOOTAGE</span>
+        <button class="mute-btn" data-mute-target="caseVideoMeta" type="button" aria-label="Unmute video">SOUND OFF</button>
+      </div>
+    </div>
+    <div class="case-copy">
+      <span class="tag-chip" style="background:var(--coral-soft);color:#a3123a;">Case study — Meta activation</span>
+      <h2>An on-site engagement build, delivered for Meta at a live event.</h2>
+      <p>For a Meta activation, Qspiran built the on-ground tech that let attendees engage directly at the booth — interactive touchpoints, screens, and the flow that kept the experience running smoothly through the event.</p>
+      <p>Planning, hardware setup, software and on-site support — handled end to end by the Qspiran team.</p>
+      <div class="route">
+        <div class="stamp hq"><span class="city">Noida, India</span><span class="status">DESIGNED &amp; BUILT</span></div>
+        <div class="stamp done"><span class="city">Event Activation</span><span class="status">DELIVERED · COMPLETED</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CASE STUDY: 3D HOLOGRAM AVATARS ================= -->
+<section class="case" id="case-hologram">
+  <div class="wrap case-grid">
+    <div class="case-shot">
+      <video id="caseVideoHologram" muted loop playsinline preload="auto">
+        <source src="https://www.qspiran.com/uploads/media/screen-recording-2026-09-02-at-125224-ammov-1788290561-6a97260189b2c.mov">
+      </video>
+      <div class="case-caption">
+        <span class="rec"><span></span>LIVE FOOTAGE</span>
+        <button class="mute-btn" data-mute-target="caseVideoHologram" type="button" aria-label="Unmute video">SOUND OFF</button>
+      </div>
+    </div>
+    <div class="case-copy">
+      <span class="tag-chip chip-violet">Case study — Hologram avatars</span>
+      <h2>3D hologram avatars and interactive characters for live events.</h2>
+      <p>Qspiran builds holographic 3D avatar and character systems that greet, guide and entertain guests at events — a life-like presence projected on-site instead of a flat screen or a printed standee.</p>
+      <p>Built for booths, lobbies and stages, the system runs the character in real time and syncs with the rest of the event's signage and kiosks.</p>
+      <div class="route">
+        <div class="stamp hq"><span class="city">Noida, India</span><span class="status">DESIGNED &amp; BUILT</span></div>
+        <div class="stamp done"><span class="city">Event Deployment</span><span class="status">DELIVERED · COMPLETED</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PORTFOLIO ================= -->
+<section class="portfolio" id="portfolio">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="tag-chip chip-gold">Products we've shipped</span>
+        <h2>Twelve products, one shared build philosophy.</h2>
+      </div>
+      <p class="sec-note">A running list of what's shipped so far — signage, kiosks, event tech and the software tying them together.</p>
+    </div>
+    <div class="p-grid">
+      <div class="p-card featured"><div class="p-thumb"><img src="https://www.qspiran.com/assets/img/portfolio/mri-app.png" alt="MRI App interface"></div><div class="p-body"><span class="p-tag">Signage</span><h4>MRI App — Video Control &amp; Management</h4><p>Push and control video content across multiple screens from one dashboard, with real-time updates.</p></div></div>
+
+      <div class="p-card"><div class="p-thumb"><img src="https://www.qspiran.com/assets/img/portfolio/token-system.png" alt="Restaurant token system display"></div><div class="p-body"><span class="p-tag">Hospitality</span><h4>Restaurant Token System</h4><p>A digital token board that keeps queues calm and kitchens on schedule.</p></div></div>
+
+      <div class="p-card"><div class="p-thumb"><img src="https://www.qspiran.com/assets/img/portfolio/ai-selfie.png" alt="AI selfie application"></div><div class="p-body"><span class="p-tag">AI</span><h4>AI Selfie Application</h4><p>Live filters and instant AI touch-ups for a perfect shot, every time.</p></div></div>
+
+      <div class="p-card"><div class="p-thumb"><img src="https://www.qspiran.com/assets/img/portfolio/travel.png" alt="Inbound travel management system"></div><div class="p-body"><span class="p-tag">Travel</span><h4>Inbound Travel Management System</h4><p>Itinerary planning, bookings and traveler updates in one platform.</p></div></div>
+
+      <div class="p-card"><div class="p-thumb"><img src="https://www.qspiran.com/assets/img/portfolio/travel-soft.png" alt="Travel software solutions"></div><div class="p-body"><span class="p-tag">Travel</span><h4>Travel Software Solutions</h4><p>Booking, customer management and analytics tools for travel businesses.</p></div></div>
+
+      <div class="p-card"><div class="p-thumb"><img src="https://www.qspiran.com/assets/img/portfolio/self-ordering.jpg" alt="Self ordering kiosk"></div><div class="p-body"><span class="p-tag">Kiosk</span><h4>Self Ordering Kiosk System</h4><p>Guests order and pay right at the counter — no queue, no server needed.</p></div></div>
+
+      <div class="p-card"><div class="p-thumb"><img src="https://www.qspiran.com/assets/img/portfolio/flipbook.jpg" alt="Flipbook publishing tool"></div><div class="p-body"><span class="p-tag">Publishing</span><h4>Flipbook Publishing</h4><p>Static PDFs turned into interactive, page-turning digital publications.</p></div></div>
+
+      <div class="p-card"><div class="p-thumb"><img src="https://www.qspiran.com/assets/img/portfolio/interactive-kiosk.jpg" alt="Interactive kiosk in a public space"></div><div class="p-body"><span class="p-tag">Kiosk</span><h4>Interactive Kiosk System</h4><p>Touchscreen information and service points for public and corporate spaces.</p></div></div>
+
+      <div class="p-card"><div class="p-thumb"><img src="https://www.qspiran.com/assets/img/portfolio/mobile-app-builder.jpg" alt="Mobile app builder tool"></div><div class="p-body"><span class="p-tag">Mobile</span><h4>Mobile App Builder</h4><p>A no-code toolkit for spinning up ordering apps for restaurants and cafes.</p></div></div>
+
+      <div class="p-card"><div class="p-thumb"><img src="https://www.qspiran.com/assets/img/portfolio/badge-printing.png" alt="Badge printing system at an event"></div><div class="p-body"><span class="p-tag">Event Tech</span><h4>Badge Printing System</h4><p>Attendee badges printed in seconds — fast check-in for events of any size.</p></div></div>
+
+      <div class="p-card"><div class="p-thumb"><img src="https://www.qspiran.com/assets/img/portfolio/ticketing-kiosk.png" alt="Ticketing kiosk at an event entrance"></div><div class="p-body"><span class="p-tag">Event Tech</span><h4>Ticketing Kiosk</h4><p>Self-serve entry management that keeps queues moving at events.</p></div></div>
+
+      <div class="p-card"><div class="p-thumb"><img src="https://www.qspiran.com/assets/img/portfolio/selfie-booth.png" alt="Event selfie booth"></div><div class="p-body"><span class="p-tag">Event Tech</span><h4>Selfie Booth</h4><p>An on-site photo booth guests use to capture and share the moment instantly.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= INDUSTRIES ================= -->
+<section class="industries">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="tag-chip chip-blue on-dark">Where it shows up</span>
+        <h2 style="color:#fff;">Built for the rooms your guests actually walk into.</h2>
+      </div>
+    </div>
+    <div class="ind-row">
+      <div class="ind-item" style="--ind-accent:var(--gold)"><h4>Corporate offices &amp; boardrooms</h4><p>Meeting room displays, visitor and access systems</p></div>
+      <div class="ind-item" style="--ind-accent:var(--coral)"><h4>Trade fairs &amp; exhibitions</h4><p>Interactive booths, registration and badge printing</p></div>
+      <div class="ind-item" style="--ind-accent:var(--blue)"><h4>Hospitality &amp; F&amp;B</h4><p>Self-ordering kiosks, digital menus, token systems</p></div>
+      <div class="ind-item" style="--ind-accent:var(--violet)"><h4>Events &amp; conferences</h4><p>Ticketing kiosks, selfie booths, on-site check-in</p></div>
+    </div>
+    <p class="foot-note">Client logos on request — this section is placeholder until real names are added.</p>
+  </div>
+</section>
+
+<!-- ================= TEAM ================= -->
+<section class="team" id="team">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="tag-chip chip-gold">The crew</span>
+        <h2>Six people, running product to delivery.</h2>
+      </div>
+    </div>
+    <div class="team-grid">
+      <div class="badge"><div class="badge-photo"><img src="https://www.qspiran.com/assets/img/team/rahul.png" alt="Rahul Sharma"></div><div class="badge-info" style="--badge-accent:var(--gold)"><div class="b-name">Rahul Sharma</div><div class="b-role mono">FOUNDER</div></div></div>
+      <div class="badge"><div class="badge-photo"><img src="https://www.qspiran.com/assets/img/team/nitesh.png" alt="Nitesh Singh Rajpoot"></div><div class="badge-info" style="--badge-accent:var(--coral)"><div class="b-name">Nitesh S. Rajpoot</div><div class="b-role mono">FOUNDER</div></div></div>
+      <div class="badge"><div class="badge-photo"><img src="https://www.qspiran.com/assets/img/team/pramodd-kumar.png" alt="Pramodd Kumar"></div><div class="badge-info" style="--badge-accent:var(--blue)"><div class="b-name">Pramodd Kumar</div><div class="b-role mono">DIR. OF SALES</div></div></div>
+      <div class="badge"><div class="badge-photo"><img src="https://www.qspiran.com/assets/img/team/sandeep-kumar.png" alt="Sandeep Kumar"></div><div class="badge-info" style="--badge-accent:var(--violet)"><div class="b-name">Sandeep Kumar</div><div class="b-role mono">DIR. OF OPS</div></div></div>
+      <div class="badge"><div class="badge-photo"><img src="https://www.qspiran.com/assets/img/team/sameeksha-sharma.png" alt="Sameeksha Sharma"></div><div class="badge-info" style="--badge-accent:var(--gold)"><div class="b-name">Sameeksha Sharma</div><div class="b-role mono">SALES &amp; MKTG</div></div></div>
+      <div class="badge"><div class="badge-photo"><img src="https://www.qspiran.com/assets/img/team/upasna.png" alt="Upasna Rajpoot"></div><div class="badge-info" style="--badge-accent:var(--coral)"><div class="b-name">Upasna Rajpoot</div><div class="b-role mono">TECH HEAD</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT / FOOTER ================= -->
+<section class="contact" id="contact">
+  <div class="wrap contact-grid">
+    <div>
+      <span class="tag-chip on-dark" style="color:var(--coral-soft);">Get in touch</span>
+      <h2>Have a screen, a kiosk, or a hologram to build? Let's talk.</h2>
+    </div>
+    <div class="contact-fields">
+      <div class="c-field"><div class="c-label mono">OFFICE</div><div class="c-value">Office No 302, A-43, Sector 63, Noida, Uttar Pradesh, 201301</div></div>
+      <div class="c-field"><div class="c-label mono">EMAIL</div><div class="c-value"><a href="mailto:crm@qspiran.com">crm@qspiran.com</a></div></div>
+      <div class="c-field"><div class="c-label mono">CALL</div><div class="c-value"><a href="tel:+919911743512">+91 9911743512</a> &nbsp;·&nbsp; <a href="tel:+919069587017">+91 9069587017</a></div></div>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <img src="https://www.qspiran.com/uploads/media/logo-finalpng-1788264361-6a96bfa94d1d7.png" alt="Qspiran Technologies">
+    <span class="fine">© Qspiran Technologies. All rights reserved.</span>
+  </div>
+</section>
+
+<script>
+  // ---- Scroll progress bar ----
+  const progressBar = document.getElementById('scrollProgress');
+  function updateProgress(){
+    const h = document.documentElement;
+    const scrolled = (h.scrollTop || document.body.scrollTop);
+    const height = h.scrollHeight - h.clientHeight;
+    progressBar.style.width = height > 0 ? (scrolled/height*100) + '%' : '0%';
+  }
+  document.addEventListener('scroll', updateProgress, {passive:true});
+  updateProgress();
+
+  // ---- Mobile nav toggle ----
+  const navToggle = document.getElementById('navToggle');
+  const navMobilePanel = document.getElementById('navMobilePanel');
+  if (navToggle && navMobilePanel){
+    navToggle.addEventListener('click', () => {
+      const open = navMobilePanel.classList.toggle('open');
+      navToggle.classList.toggle('open', open);
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    navMobilePanel.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        navMobilePanel.classList.remove('open');
+        navToggle.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // ---- Hero video reveal once playable ----
+  const heroVideo = document.getElementById('heroVideo');
+  if (heroVideo){
+    heroVideo.addEventListener('loadeddata', () => heroVideo.classList.add('ready'));
+    if (heroVideo.readyState >= 2) heroVideo.classList.add('ready');
+  }
+
+  // ---- Hero cursor-reactive glow (desktop pointer only) ----
+  const heroSection = document.getElementById('heroSection');
+  const heroGlow = document.getElementById('heroGlow');
+  if (heroSection && heroGlow && window.matchMedia('(hover:hover)').matches){
+    heroSection.addEventListener('mousemove', (e) => {
+      const r = heroSection.getBoundingClientRect();
+      const x = ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%';
+      const y = ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%';
+      heroGlow.style.setProperty('--gx', x);
+      heroGlow.style.setProperty('--gy', y);
+    });
+  }
+
+  // ---- Case study videos: play only while in view, mute toggle ----
+  const caseVideos = document.querySelectorAll('.case-shot video');
+  if ('IntersectionObserver' in window){
+    const vio = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting){ e.target.play().catch(()=>{}); }
+        else { e.target.pause(); }
+      });
+    }, { threshold: 0.35 });
+    caseVideos.forEach(v => vio.observe(v));
+  }
+  document.querySelectorAll('.mute-btn[data-mute-target]').forEach(btn => {
+    const video = document.getElementById(btn.dataset.muteTarget);
+    if (!video) return;
+    btn.addEventListener('click', () => {
+      video.muted = !video.muted;
+      btn.textContent = video.muted ? 'SOUND OFF' : 'SOUND ON';
+      btn.setAttribute('aria-label', video.muted ? 'Unmute video' : 'Mute video');
+    });
+  });
+
+  // ---- Split-flap hero headline ----
+  const headlineText = "Screens, kiosks & holograms your guests can't scroll past.";
+  const el = document.getElementById('hero-headline');
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  const words = headlineText.split(' ');
+  let charIndex = 0;
+  const spans = [];
+
+  words.forEach((word, wi) => {
+    const wordSpan = document.createElement('span');
+    wordSpan.className = 'flap-word';
+    [...word].forEach((ch) => {
+      const s = document.createElement('span');
+      s.className = 'flap-char';
+      s.textContent = ch;
+      wordSpan.appendChild(s);
+      spans.push({el: s, target: ch, delay: charIndex * 22});
+      charIndex++;
+    });
+    el.appendChild(wordSpan);
+    if (wi < words.length - 1) el.appendChild(document.createTextNode(' '));
+  });
+
+  function scramble(item){
+    const { el, target, delay } = item;
+    let ticks = 0;
+    const maxTicks = 6 + Math.floor(Math.random()*4);
+    setTimeout(() => {
+      const iv = setInterval(() => {
+        if (ticks >= maxTicks){
+          el.textContent = target;
+          clearInterval(iv);
+          return;
+        }
+        el.textContent = target === ' ' ? ' ' : chars[Math.floor(Math.random()*chars.length)];
+        ticks++;
+      }, 28);
+    }, delay);
+  }
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion){
+    spans.forEach(s => s.el.textContent = s.target);
+  } else {
+    spans.forEach(scramble);
+  }
+
+  // ---- Animated count-up stats ----
+  function animateCount(node){
+    const target = parseFloat(node.dataset.count);
+    const suffix = node.dataset.suffix || '';
+    const duration = 1100;
+    const start = performance.now();
+    function tick(now){
+      const p = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - p, 3);
+      node.textContent = Math.round(eased * target) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    if (reduceMotion){
+      node.textContent = target + suffix;
+    } else {
+      requestAnimationFrame(tick);
+    }
+  }
+  const countEls = document.querySelectorAll('.bento-num[data-count]');
+  if ('IntersectionObserver' in window){
+    const cio = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting){ animateCount(e.target); cio.unobserve(e.target); }
+      });
+    }, { threshold: 0.6 });
+    countEls.forEach(el => cio.observe(el));
+  } else {
+    countEls.forEach(animateCount);
+  }
+</script>
+</body>
+</html>
